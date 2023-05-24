@@ -12,5 +12,8 @@ module.exports = {
     },
     editAction: async (req, res) => {
 
+    },
+    getCategories: async (req, res) => {
+
     }
 }

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-// criando o nosso proimeiro endpoint
+
+
+const Auth = require('./middlewares/Auth');
 
 // importando os controllers
 const AuthController = require('./controllers/AuthController');
@@ -14,19 +16,20 @@ router.get('/ping', (req, res) => { // traferir pra ca minha rota
 // criando nassas rotas
 // fazer login listar estatos e outros
 
-router.use('/state', UserController.getStates);
+// miffleware um codigo que vai rodar antes que a rota iniciar.
+router.use('/state', /*Auth.private,*/ UserController.getStates);
 
 router.post('/user/signin', AuthController.signin); // login
 router.post('/user/signup', AuthController.signup); // autenticaçao
 
-router.get('/user/me', UserController.info); // informaçao do proprio usuario
-router.get('/user/me', UserController.editAction); // trocar a informçao do usuario
+router.get('/user/me', Auth.private, UserController.info); // informaçao do proprio usuario
+router.get('/user/me', Auth.private, UserController.editAction); // trocar a informçao do usuario
 
-router.get('/categories', UserController.getCategories);// listar categorias
+router.get('/categories', AdsController.getCategories);// listar categorias
 
-router.post('/ad/add', AdsController.AddAction); //adicionar anuncio novo
+router.post('/ad/add', Auth.private, AdsController.AddAction); //adicionar anuncio novo
 router.get('/ad/list', AdsController.getList); // lista lista de anuncios
 router.get('/ad/item', AdsController.getItem); // informaçoes de anuncio especifico
-router.post('/ad/:id', AdsController.editAction); // alterar o anuncio
+router.post('/ad/:id', Auth.private, AdsController.editAction); // alterar o anuncio
 
 module.exports = router;
