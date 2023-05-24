@@ -3,6 +3,7 @@ const express = require('express');
 const mongosse = require('mongoose');
 const cors = require('cors');
 const fileupload = require('express-fileupload');
+const apiRoutes = require('./src/routes'); // importando a rota
 
 // antes de criar o servidor fazer a conexao com o banco de dados.
 mongosse.connect(process.env.DATABASE);
@@ -21,10 +22,8 @@ server.use(fileupload());
 
 server.use(express.static(__dirname + '/public'));
 
-// e aqui ficaram as rotas (ping para teste)
-server.get('/ping', (req, res) => {
-    res.json({ pong: true });
-});
+// e aqui ficaram as rotas
+server.use('/', apiRoutes);
 
 // despois list a porta
 server.listen(process.env.PORT, () => {
