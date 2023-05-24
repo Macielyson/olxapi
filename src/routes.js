@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+// criando o nosso proimeiro endpoint
 
 // importando os controllers
 const AuthController = require('./controllers/AuthController');
